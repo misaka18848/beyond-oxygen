@@ -28,7 +28,8 @@ public class BOOxygenSources {
     public static final int DEFAULT_PRIORITY_PLAYER_INVENTORY = 2000;
     public static final int DEFAULT_PRIORITY_HELD_ITEMS = 3000;
 
-    public static final ResourceKey<Registry<OxygenSource<?>>> REGISTRY_KEY = ResourceKey.createRegistryKey(new ResourceLocation(BeyondOxygen.MODID, "oxygen_sources"));
+    @SuppressWarnings("removal")
+	public static final ResourceKey<Registry<OxygenSource<?>>> REGISTRY_KEY = ResourceKey.createRegistryKey(new ResourceLocation(BeyondOxygen.MODID, "oxygen_sources"));
     private static DeferredRegister<OxygenSource<?>> registry = DeferredRegister.create(REGISTRY_KEY, BeyondOxygen.MODID);
     public static final Supplier<IForgeRegistry<OxygenSource<?>>> REGISTRY = registry.makeRegistry(() -> RegistryBuilder.of(REGISTRY_KEY.location()));
 
@@ -37,7 +38,7 @@ public class BOOxygenSources {
             entity -> Arrays.stream(EquipmentSlot.values())
                     .filter(EquipmentSlot::isArmor)
                     .map(entity::getItemBySlot)
-                    .filter(stack -> stack.getItem() instanceof OxygenStorageArmorItem)));
+                    .filter(stack -> stack.getItem() instanceof OxygenStorageArmorItem || stack.is(BOItemTags.BREATHABLES))));
     public static final RegistryObject<OxygenSource<ItemStack>> HELD_ITEMS = registry.register("held_items", () -> OxygenSource.forItems(
             DEFAULT_PRIORITY_HELD_ITEMS,
             entity -> Arrays.stream(EquipmentSlot.values())
