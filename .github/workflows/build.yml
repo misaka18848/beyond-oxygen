@@ -1,0 +1,38 @@
+name: Build Beyond Oxygen (Manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to build (e.g. master)'
+        required: false
+        default: 'master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch || '1.20.1' }}
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build mod with shadowJar
+        run: ./gradlew build
+
+      - name: Upload final mod JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: beyond-oxygen-mod
+          path: build/libs/beyond_oxygen-*-all.jar
