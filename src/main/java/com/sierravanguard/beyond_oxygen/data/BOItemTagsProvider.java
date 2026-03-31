@@ -87,7 +87,9 @@ public class BOItemTagsProvider extends TagsProvider<Item> {
         this.tag(BOItemTags.BREATHABLES)
                 .add(BOItems.OXYGEN_TANK.getKey())
                 .addOptional(ModItems.GAS_TANK.getId())
-                .addOptional(ModItems.LARGE_GAS_TANK.getId());
+                .addOptional(ModItems.LARGE_GAS_TANK.getId())
+                .addOptional(ModItems.SPACE_SUIT.getId())
+                .addOptional(ModItems.NETHERITE_SPACE_SUIT.getId());
 
         this.tag(BOItemTags.STEEL_INGOT)
                 .addOptionalTag(BOItemTags.FORGE_STEEL_INGOT);
